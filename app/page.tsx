@@ -1,6 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Star, Coffee, Gamepad2 } from "lucide-react";
+
+function GitHubIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+    </svg>
+  );
+}
 import AnimationPreview from "@/components/sprite/AnimationPreview";
 import { downloadZip, zipEntriesFromDataUrls } from "@/lib/zip";
 import { encodeGif } from "@/lib/sprite/gif";
@@ -341,28 +350,58 @@ export default function SpriteBench() {
   );
 
   return (
-    <div className="pixel-grid-bg min-h-screen text-zinc-100" style={{ background: "#0b0914" }}>
+    <div className="min-h-screen text-zinc-100" style={{ background: "#0b0914" }}>
+      {/* Floating pixel background */}
+      <div aria-hidden="true" style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div key={i} className="pixel-float" />
+        ))}
+      </div>
+
       {/* Nav */}
-      <header className="sticky top-0 z-20 border-b backdrop-blur-md" style={{ borderColor: "rgba(139,92,246,0.25)", background: "rgba(11,9,20,0.92)" }}>
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3">
-          <a href="/" className="flex items-center gap-2 font-bold tracking-tight text-zinc-100 hover:opacity-80 transition-opacity">
-            <span className="text-lg">🎮</span>
-            <span className="text-base">Sprite Bench</span>
+      <header className="sticky top-0 z-20 border-b backdrop-blur-md" style={{ borderColor: "rgba(139,92,246,0.25)", background: "rgba(11,9,20,0.95)" }}>
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-3">
+          {/* Logo */}
+          <a href="/" className="flex items-center gap-2 font-bold tracking-tight text-zinc-100 hover:opacity-80 transition-opacity shrink-0">
+            <Gamepad2 size={20} className="text-purple-400" />
+            <span className="text-sm font-extrabold tracking-tight">Sprite Bench</span>
           </a>
-          <nav className="flex items-center gap-4">
+
+          {/* Nav links */}
+          <nav className="flex items-center gap-1 sm:gap-2 flex-wrap justify-end">
             <a
-              href="/about"
-              className="text-xs font-medium text-zinc-400 transition-colors hover:text-zinc-200"
+              href="https://n8builds.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-zinc-400 transition-all hover:text-purple-300 hover:bg-purple-500/10"
             >
-              About
+              <img src="https://n8builds.dev/tab/n8-icon-192.png" alt="n8builds" width={14} height={14} className="rounded-sm" />
+              <span className="hidden sm:inline">n8builds.dev</span>
             </a>
             <a
               href="https://github.com/n8watkins/sprite-bench"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs font-medium text-zinc-400 transition-colors hover:text-zinc-200"
+              className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-zinc-400 transition-all hover:text-zinc-200 hover:bg-white/5"
             >
-              GitHub ↗
+              <GitHubIcon size={14} />
+              <span className="hidden sm:inline">GitHub</span>
+            </a>
+            <a
+              href="https://github.com/n8watkins/sprite-bench"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-all hover:scale-105"
+              style={{ background: "rgba(251,191,36,0.12)", border: "1px solid rgba(251,191,36,0.3)", color: "#fbbf24" }}
+            >
+              <Star size={13} fill="currentColor" />
+              <span>Star</span>
+            </a>
+            <a
+              href="/about"
+              className="rounded-lg px-2.5 py-1.5 text-xs font-semibold text-zinc-400 transition-all hover:text-zinc-200 hover:bg-white/5"
+            >
+              About
             </a>
             <a
               href="https://ko-fi.com/n8watkins"
@@ -371,18 +410,19 @@ export default function SpriteBench() {
               className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all hover:scale-105 hover:opacity-90"
               style={{ background: "#ff5e5b", color: "#fff" }}
             >
-              ☕ Buy me a coffee
+              <Coffee size={13} />
+              <span>Buy me a coffee</span>
             </a>
           </nav>
         </div>
       </header>
 
       {/* Hero */}
-      <div className="mx-auto max-w-6xl px-6 pt-10 pb-6">
-        <div className="mb-3 flex flex-wrap gap-2">
-          <span className="rounded-full border px-3 py-1 text-xs font-semibold" style={{ borderColor: "rgba(6,182,212,0.4)", color: "#06b6d4", background: "rgba(6,182,212,0.08)" }}>✨ 100% Free</span>
-          <span className="rounded-full border px-3 py-1 text-xs font-semibold" style={{ borderColor: "rgba(168,85,247,0.4)", color: "#a855f7", background: "rgba(168,85,247,0.08)" }}>🖥️ Runs in your browser</span>
-          <span className="rounded-full border px-3 py-1 text-xs font-semibold" style={{ borderColor: "rgba(139,92,246,0.4)", color: "#8b5cf6", background: "rgba(139,92,246,0.08)" }}>🔒 No signup · no server</span>
+      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-10 pb-6">
+        <div className="mb-4 flex flex-wrap gap-2">
+          <span className="rounded-full border px-3.5 py-1.5 text-xs font-bold" style={{ borderColor: "rgba(6,182,212,0.4)", color: "#06b6d4", background: "rgba(6,182,212,0.08)" }}>✨ 100% Free</span>
+          <span className="rounded-full border px-3.5 py-1.5 text-xs font-bold" style={{ borderColor: "rgba(168,85,247,0.4)", color: "#a855f7", background: "rgba(168,85,247,0.08)" }}>🖥️ Runs in your browser</span>
+          <span className="rounded-full border px-3.5 py-1.5 text-xs font-bold" style={{ borderColor: "rgba(139,92,246,0.4)", color: "#8b5cf6", background: "rgba(139,92,246,0.08)" }}>🔒 No signup · no server</span>
         </div>
         <h1 className="gradient-text text-4xl font-extrabold tracking-tight sm:text-5xl">
           Sprite Bench
@@ -393,7 +433,7 @@ export default function SpriteBench() {
         </p>
       </div>
 
-      <main className="mx-auto w-full max-w-6xl px-6 pb-8">
+      <main className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-8">
 
         {error && (
           <div className="mb-4 rounded-xl border border-red-500/40 px-4 py-3 text-sm text-red-300" style={{ background: "rgba(239,68,68,0.08)" }}>
@@ -401,7 +441,7 @@ export default function SpriteBench() {
           </div>
         )}
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]" style={{ position: "relative", zIndex: 10 }}>
           {/* Left column: source + grid + export */}
           <div className="flex flex-col gap-6">
             {/* Source */}
@@ -641,7 +681,7 @@ export default function SpriteBench() {
                 <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
                   Sheet · grid overlay
                 </h2>
-                <div className="relative inline-block max-w-full">
+                <div className="relative block max-w-full overflow-hidden rounded-lg">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={source.dataUrl} alt="Sprite sheet"
@@ -810,45 +850,59 @@ export default function SpriteBench() {
       </main>
 
       {/* Ko-fi CTA banner */}
-      <div className="mx-auto max-w-6xl px-6 mt-12">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 mt-12">
         <div
           className="rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
           style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(6,182,212,0.1) 100%)", border: "1px solid rgba(168,85,247,0.25)" }}
         >
           <div>
             <p className="font-bold text-zinc-100 text-base">Enjoying Sprite Bench?</p>
-            <p className="text-sm text-zinc-400 mt-0.5">It's free and always will be. If it saved you time, a coffee keeps the lights on. ☕</p>
+            <p className="text-sm text-zinc-400 mt-0.5">It&apos;s free and always will be. If it saved you time, a coffee keeps the lights on.</p>
           </div>
-          <a
-            href="https://ko-fi.com/n8watkins"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 rounded-xl px-6 py-3 font-bold text-sm transition-all hover:scale-105 hover:opacity-90"
-            style={{ background: "#ff5e5b", color: "#fff" }}
-          >
-            ☕ Buy me a coffee on Ko-fi
-          </a>
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="https://github.com/n8watkins/sprite-bench"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-bold transition-all hover:scale-105"
+              style={{ background: "rgba(251,191,36,0.15)", border: "1px solid rgba(251,191,36,0.35)", color: "#fbbf24" }}
+            >
+              <Star size={14} fill="currentColor" />
+              Star on GitHub
+            </a>
+            <a
+              href="https://ko-fi.com/n8watkins"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 rounded-xl px-5 py-2.5 text-sm font-bold transition-all hover:scale-105 hover:opacity-90"
+              style={{ background: "#ff5e5b", color: "#fff" }}
+            >
+              <Coffee size={14} />
+              Buy me a coffee
+            </a>
+          </div>
         </div>
       </div>
 
-      <footer className="mt-10 pb-10 px-6 text-center">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-4 flex items-center justify-center gap-2">
-            <span className="text-xl">🎮</span>
-            <span className="font-bold text-zinc-200 text-base tracking-tight">Sprite Bench</span>
+      <footer className="relative z-10 mt-10 pb-10 px-6 text-center">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-3 flex items-center justify-center gap-2">
+            <Gamepad2 size={18} className="text-purple-400" />
+            <span className="font-bold text-zinc-200 text-sm tracking-tight">Sprite Bench</span>
           </div>
           <p className="text-xs text-zinc-500 mb-4">
             A free tool by{" "}
-            <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="font-semibold text-purple-400 hover:text-purple-300 transition-colors">
+            <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-purple-400 hover:text-purple-300 transition-colors">
+              <img src="https://n8builds.dev/tab/n8-icon-192.png" alt="" width={12} height={12} className="rounded-sm inline" />
               n8builds.dev
             </a>
             {" "}— building useful things in public.
           </p>
-          <div className="flex items-center justify-center gap-5 text-xs text-zinc-500">
+          <div className="flex items-center justify-center gap-5 text-xs text-zinc-600">
             <a href="/about" className="hover:text-zinc-300 transition-colors">About</a>
-            <a href="https://github.com/n8watkins/sprite-bench" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">GitHub</a>
+            <a href="https://github.com/n8watkins/sprite-bench" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-zinc-300 transition-colors"><GitHubIcon size={12} /> GitHub</a>
             <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">n8builds.dev</a>
-            <a href="https://ko-fi.com/n8watkins" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">Ko-fi</a>
+            <a href="https://ko-fi.com/n8watkins" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-zinc-300 transition-colors"><Coffee size={12} /> Ko-fi</a>
           </div>
         </div>
       </footer>
