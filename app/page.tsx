@@ -94,6 +94,7 @@ export default function SpriteBench() {
   const [scale, setScale] = useState(1);
   const [gif, setGif] = useState<{ url: string; bytes: number } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
 
@@ -569,6 +570,25 @@ export default function SpriteBench() {
                       >
                         Download GIF
                       </a>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          try {
+                            const res = await fetch(gif.url);
+                            const blob = await res.blob();
+                            await navigator.clipboard.write([
+                              new ClipboardItem({ "image/gif": blob }),
+                            ]);
+                            setCopied(true);
+                            setTimeout(() => setCopied(false), 2000);
+                          } catch {
+                            setError("Clipboard copy isn't supported in this browser — use Download instead.");
+                          }
+                        }}
+                        className="rounded-lg border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:border-cyan-500/60 hover:text-cyan-300"
+                      >
+                        {copied ? "Copied!" : "Copy GIF"}
+                      </button>
                       <span className="text-xs text-zinc-500">{(gif.bytes / 1024).toFixed(1)} KB</span>
                     </div>
                   </div>
