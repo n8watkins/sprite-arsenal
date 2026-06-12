@@ -41,9 +41,12 @@ deps beyond those four.
 - Deployed to https://sprite-bench.vercel.app and confirmed live
 - GitHub repo is public: https://github.com/n8watkins/sprite-bench
 
+**Also done (same session, later):**
+| `e40bbe0` | OG image (ImageResponse), social metadata, Copy GIF button |
+| `b5e85a9` | n8builds-web: Sprite Bench project card + `/sprite-bench` redirect (separate repo) |
+
 **Not done / in flight:**
-- Google Analytics (GA4) — needs a measurement ID from the user; implementation is ready (see Next steps)
-- OG social card image — placeholder URL is in place, no actual image yet
+- Vercel Analytics — one-click enable in the Vercel dashboard (no code needed)
 - All feature work below is unstarted
 
 ---
@@ -63,60 +66,14 @@ Do NOT implement GA4 — that decision was explicitly rejected this session.
 
 ---
 
-### 2. OG / social card
-Sharing the URL on Discord/Twitter/Reddit shows a blank card right now.
+### 2. OG social card — DONE (`e40bbe0`)
+`app/opengraph-image.tsx` — programmatic 1200×630 via `ImageResponse`. Auto-served at `/opengraph-image`. Metadata wired in `app/layout.tsx`.
 
-- Create a static `public/og.png` — 1200×630px, dark background, tool name, a GIF of the demo slime
-- In `app/layout.tsx` metadata, add:
+### 3. Copy GIF to clipboard — DONE (`e40bbe0`)
+Button added in the gif export block in `app/page.tsx`. Shows "Copied!" for 2s on success; shows error message on browser API failure.
 
-```tsx
-openGraph: {
-  title: "Sprite Bench",
-  description: "Slice a sprite sheet, preview live, export GIF or frames. Free, runs in-browser.",
-  url: "https://sprite-bench.vercel.app",
-  images: [{ url: "/og.png", width: 1200, height: 630 }],
-},
-twitter: {
-  card: "summary_large_image",
-  title: "Sprite Bench",
-  description: "...",
-  images: ["/og.png"],
-},
-```
-
-Acceptance: pasting the URL into Twitter card validator shows the image.
-
----
-
-### 3. Copy GIF to clipboard
-One of the highest-friction moments: user generates a GIF, wants to paste it into Discord — currently requires Download → open folder → copy file.
-
-In `app/page.tsx`, in the `gif &&` block alongside the Download button:
-
-```tsx
-<button
-  type="button"
-  onClick={async () => {
-    const res = await fetch(gif.url);
-    const blob = await res.blob();
-    await navigator.clipboard.write([new ClipboardItem({ "image/gif": blob })]);
-  }}
-  className="..."
->
-  Copy GIF
-</button>
-```
-
-Note: `ClipboardItem` with `image/gif` has mixed browser support. Wrap in try/catch and show a toast if it fails. Chrome supports it; Firefox/Safari may not.
-
----
-
-### 4. Add to n8builds.dev projects
-
-The user's main site is `/home/natkins/n8builds/n8builds-web` (deployed at https://n8builds.dev). Sprite Bench should appear there as a project card.
-
-- File to edit: `n8builds-web/components/Projects/index.tsx` (or wherever the project list lives — read it first)
-- Card: title "Sprite Bench", description from README, link to https://sprite-bench.vercel.app, tag "tool" or "free"
+### 4. Add to n8builds.dev projects — DONE (`b5e85a9` in n8builds-web)
+Project card added at id 5 in `n8builds-web/data/projects.tsx`. `/sprite-bench` redirect added in `next.config.mjs`. `sprite-bench.vercel.app` added to remotePatterns.
 
 ---
 
