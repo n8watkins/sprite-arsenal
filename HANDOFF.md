@@ -50,38 +50,16 @@ deps beyond those four.
 
 ## Next steps (ordered)
 
-### 1. Google Analytics
-The user wants GA on this project. They have GA on other projects (n8builds-web).
+### 1. Vercel Analytics (analytics — DECIDED)
+**Decision:** Use Vercel Analytics, not GA4. User does not have a GA4 property set up and doesn't want to manage multiple GA accounts. Vercel Analytics is one-click, no code changes, no measurement ID.
 
-**Steps:**
-1. User must create a new GA4 property at analytics.google.com → call it "Sprite Bench" → copy the `G-XXXXXXXXXX` measurement ID
-2. Add to Vercel env vars: `NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX`
-3. In `app/layout.tsx`, add after the existing imports:
+**Steps (no code needed):**
+1. Go to https://vercel.com → sprite-bench project → **Analytics** tab → **Enable**
+2. Done. Page views, visitors, and top pages appear in the Vercel dashboard.
 
-```tsx
-import Script from "next/script";
-```
+**Trade-off accepted:** Vercel Analytics has no event tracking or funnels — just pageview-level data. That's sufficient for a free tool where the goal is "how many people are using this."
 
-And inside `<head>` (add `<head>` tag to the layout if not present):
-
-```tsx
-{process.env.NEXT_PUBLIC_GA_ID && (
-  <>
-    <Script
-      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
-      strategy="afterInteractive"
-    />
-    <Script id="ga-init" strategy="afterInteractive">{`
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-    `}</Script>
-  </>
-)}
-```
-
-Acceptance: visiting the live site triggers a `page_view` event in the GA4 realtime dashboard.
+Do NOT implement GA4 — that decision was explicitly rejected this session.
 
 ---
 
