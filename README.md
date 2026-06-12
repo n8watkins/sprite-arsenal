@@ -26,7 +26,7 @@ That's the pitch. Everything else — the grid detection, the encoding, the fram
 
 ## Try it
 
-**[sprite-bench.vercel.app](https://sprite-bench.vercel.app)** ← live tool
+**[sprite-bench.vercel.app](https://sprite-bench.vercel.app)**
 
 When you open it, a demo sprite (a little bouncing slime) loads automatically so the page is alive immediately. Drop your own sheet on top of it and go.
 
