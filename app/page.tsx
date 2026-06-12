@@ -758,6 +758,23 @@ export default function SpriteBench() {
           </div>
         </div>
       </main>
+
+      <footer className="mt-16 border-t border-zinc-800 py-6 text-center text-xs text-zinc-500">
+        <p>
+          Built by{" "}
+          <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-zinc-300">
+            n8builds.dev
+          </a>{" "}
+          ·{" "}
+          <a href="https://github.com/n8watkins/sprite-bench" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-zinc-300">
+            GitHub
+          </a>{" "}
+          ·{" "}
+          <a href="https://ko-fi.com/n8watkins" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-zinc-300">
+            Buy me a coffee
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }
