@@ -57,3 +57,10 @@ body {
 .pixel-float:nth-child(8)  { left: 82%; width: 8px;  height: 8px;  background: rgba(6,182,212,0.2);   animation-duration: 19s; animation-delay: 5s;   bottom: -20px; }
 .pixel-float:nth-child(9)  { left: 90%; width: 6px;  height: 6px;  background: rgba(139,92,246,0.2);  animation-duration: 13s; animation-delay: 7s;   bottom: -20px; }
 .pixel-float:nth-child(10) { left: 45%; width: 10px; height: 10px; background: rgba(168,85,247,0.15); animation-duration: 17s; animation-delay: 9s;   bottom: -20px; }
+
+/* Frame editor panel slide-in */
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-down { animation: slide-down 0.18s ease-out both; }

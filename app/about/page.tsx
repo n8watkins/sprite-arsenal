@@ -227,7 +227,7 @@ export default function AboutPage() {
               className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition-all hover:scale-105"
               style={{ background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.35)", color: "#a855f7" }}
             >
-              <img src="https://n8builds.dev/tab/n8-icon-192.png" alt="n8builds" width={16} height={16} className="rounded-sm" />
+              <img src="/n8-icon.png" alt="n8builds" width={16} height={16} className="rounded-sm" />
               See everything at n8builds.dev
             </a>
           </div>
@@ -251,7 +251,7 @@ export default function AboutPage() {
               className="flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition-all hover:scale-105"
               style={{ background: "rgba(139,92,246,0.2)", border: "1px solid rgba(139,92,246,0.4)", color: "#a855f7" }}
             >
-              <img src="https://n8builds.dev/tab/n8-icon-192.png" alt="n8builds" width={16} height={16} className="rounded-sm" />
+              <img src="/n8-icon.png" alt="n8builds" width={16} height={16} className="rounded-sm" />
               n8builds.dev
             </a>
             <a

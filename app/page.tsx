@@ -106,10 +106,21 @@ export default function SpriteBench() {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [starCount, setStarCount] = useState<number | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const overlayRef = useRef<HTMLCanvasElement>(null);
   const gifUrlRef = useRef<string | null>(null);
+
+  // Fetch live GitHub star count
+  useEffect(() => {
+    fetch("https://api.github.com/repos/n8watkins/sprite-bench")
+      .then((r) => r.json())
+      .then((d: { stargazers_count?: number }) => {
+        if (typeof d.stargazers_count === "number") setStarCount(d.stargazers_count);
+      })
+      .catch(() => {});
+  }, []);
 
   // ---- Source intake (file / drop / paste) ----
   const acceptFile = useCallback(async (file: File) => {
@@ -375,17 +386,9 @@ export default function SpriteBench() {
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-zinc-400 transition-all hover:text-purple-300 hover:bg-purple-500/10"
             >
-              <img src="https://n8builds.dev/tab/n8-icon-192.png" alt="n8builds" width={14} height={14} className="rounded-sm" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/n8-icon.png" alt="n8builds" width={14} height={14} className="rounded-sm" />
               <span className="hidden sm:inline">n8builds.dev</span>
-            </a>
-            <a
-              href="https://github.com/n8watkins/sprite-bench"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-zinc-400 transition-all hover:text-zinc-200 hover:bg-white/5"
-            >
-              <GitHubIcon size={14} />
-              <span className="hidden sm:inline">GitHub</span>
             </a>
             <a
               href="https://github.com/n8watkins/sprite-bench"
@@ -394,8 +397,9 @@ export default function SpriteBench() {
               className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-all hover:scale-105"
               style={{ background: "rgba(251,191,36,0.12)", border: "1px solid rgba(251,191,36,0.3)", color: "#fbbf24" }}
             >
-              <Star size={13} fill="currentColor" />
-              <span>Star</span>
+              <GitHubIcon size={13} />
+              <Star size={11} fill="currentColor" />
+              <span>{starCount !== null ? starCount : "Star"}</span>
             </a>
             <a
               href="/about"
@@ -681,11 +685,11 @@ export default function SpriteBench() {
                 <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
                   Sheet · grid overlay
                 </h2>
-                <div className="relative block max-w-full overflow-hidden rounded-lg">
+                <div className="overflow-hidden rounded-lg" style={{ display: "inline-block", maxWidth: "100%", position: "relative" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={source.dataUrl} alt="Sprite sheet"
-                    className="max-h-64 max-w-full rounded-lg border border-zinc-800"
+                    className="block max-h-64 max-w-full border border-zinc-800"
                     style={{ imageRendering: "pixelated" }}
                   />
                   <canvas
@@ -777,7 +781,7 @@ export default function SpriteBench() {
                   const btn =
                     "rounded-lg border border-zinc-700 px-2.5 py-1.5 text-xs font-medium text-zinc-200 transition-colors hover:border-cyan-500/60 hover:text-cyan-300 disabled:opacity-40";
                   return (
-                    <div className="mt-4 rounded-xl p-4" style={{ border: "1px solid rgba(139,92,246,0.22)", background: "rgba(0,0,0,0.35)" }}>
+                    <div className="animate-slide-down mt-4 rounded-xl p-4" style={{ border: "1px solid rgba(139,92,246,0.22)", background: "rgba(0,0,0,0.35)" }}>
                       <div className="mb-3 flex items-center justify-between">
                         <h3 className="text-sm font-semibold text-zinc-200">
                           Frame {pos + 1}
@@ -893,7 +897,7 @@ export default function SpriteBench() {
           <p className="text-xs text-zinc-500 mb-4">
             A free tool by{" "}
             <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-purple-400 hover:text-purple-300 transition-colors">
-              <img src="https://n8builds.dev/tab/n8-icon-192.png" alt="" width={12} height={12} className="rounded-sm inline" />
+              <img src="/n8-icon.png" alt="" width={12} height={12} className="rounded-sm inline" />
               n8builds.dev
             </a>
             {" "}— building useful things in public.
