@@ -1,4 +1,4 @@
-# Sprite Bench
+# Sprite Arsenal
 
 **Turn any sprite sheet into an animated GIF in seconds — free, no sign-up, nothing leaves your browser.**
 
@@ -37,6 +37,12 @@ When you open it, a demo sprite (a little bouncing slime) loads automatically so
 - Game developers turning sprite sheets into preview GIFs for itch.io / Steam pages
 - Pixel artists who want to proof their animation before exporting from Aseprite
 - Anyone who has ever dragged a sprite sheet into ezgif and wanted more control
+
+---
+
+## Relationship to Asset Arsenal
+
+Sprite Arsenal is the free, standalone version of the sprite tooling inside [Asset Arsenal](https://github.com/n8watkins/asset-arsenal) (private). Asset Arsenal extends this with AI-assisted generation, bulk processing, and cloud storage. Sprite Arsenal will always be free and browser-only.
 
 ---
 

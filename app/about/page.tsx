@@ -11,12 +11,12 @@ function GitHubIcon({ size = 16, className = "" }: { size?: number; className?: 
 }
 
 export const metadata: Metadata = {
-  title: "About — Sprite Bench",
-  description: "What Sprite Bench is, how it works, and who built it.",
+  title: "About — Sprite Arsenal",
+  description: "What Sprite Arsenal is, how it works, and who built it.",
 };
 
 const features = [
-  { icon: "🎯", title: "Auto-detect grid", body: "Drop any sprite sheet and Sprite Bench reads the background color gaps to suggest the right rows and columns. No counting frames by hand." },
+  { icon: "🎯", title: "Auto-detect grid", body: "Drop any sprite sheet and Sprite Arsenal reads the background color gaps to suggest the right rows and columns. No counting frames by hand." },
   { icon: "⚡", title: "Live preview", body: "The animation plays as you adjust settings — you see exactly what your GIF will look like before you export." },
   { icon: "✂️", title: "Per-frame control", body: "Toggle frames in/out, nudge the crop 1px at a time (or 8px with Shift), set hold duration, and reorder frames." },
   { icon: "🔧", title: "Stabilize", body: "If your sprite drifts between cells, Stabilize aligns every frame to a common anchor — feet or center — so your animation stops jittering." },
@@ -102,10 +102,10 @@ export default function AboutPage() {
         className="sticky top-0 z-20 border-b backdrop-blur-md"
         style={{ borderColor: "rgba(139,92,246,0.25)", background: "rgba(11,9,20,0.95)" }}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-4">
           <Link href="/" className="flex items-center gap-2 font-bold tracking-tight text-zinc-100 hover:opacity-80 transition-opacity shrink-0">
-            <Gamepad2 size={20} className="text-purple-400" />
-            <span className="text-sm font-extrabold">Sprite Bench</span>
+            <Gamepad2 size={22} className="text-purple-400" />
+            <span className="text-lg font-extrabold">Sprite Arsenal</span>
           </Link>
           <nav className="flex items-center gap-2">
             <Link href="/" className="rounded-lg px-3 py-1.5 text-xs font-semibold text-zinc-400 transition-all hover:text-zinc-200 hover:bg-white/5">
@@ -134,7 +134,7 @@ export default function AboutPage() {
         {/* Hero */}
         <div className="mb-14 text-center">
           <div className="mb-4"><Gamepad2 size={52} className="inline text-purple-400" /></div>
-          <h1 className="gradient-text text-4xl font-extrabold tracking-tight sm:text-5xl">About Sprite Bench</h1>
+          <h1 className="gradient-text text-4xl font-extrabold tracking-tight sm:text-5xl">About Sprite Arsenal</h1>
           <p className="mx-auto mt-4 max-w-xl text-base text-zinc-400">
             A fast, free, browser-side tool for turning sprite sheets into animated GIFs.
             No account, no server, no cost — ever.
@@ -165,7 +165,7 @@ export default function AboutPage() {
             {features.map((f) => (
               <div
                 key={f.title}
-                className="rounded-2xl p-5"
+                className="rounded-2xl p-5 transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 cursor-default"
                 style={{ border: "1px solid rgba(139,92,246,0.18)", background: "rgba(255,255,255,0.03)" }}
               >
                 <div className="mb-2 flex items-center gap-2">
@@ -241,7 +241,7 @@ export default function AboutPage() {
             <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="font-semibold text-purple-400 hover:text-purple-300 transition-colors">
               n8builds.dev
             </a>
-            . Sprite Bench started inside a larger AI asset pipeline and got spun out as its own free tool.
+            . Sprite Arsenal started inside a larger AI asset pipeline and got spun out as its own free tool.
             If you make games, do pixel art, or just needed a GIF without signing up somewhere — this was built for you.
           </p>
           <div className="flex flex-wrap gap-3">
@@ -281,7 +281,7 @@ export default function AboutPage() {
           <Coffee size={40} className="inline mb-3 text-[#ff5e5b]" />
           <h2 className="text-xl font-bold text-zinc-100 mb-2">Like what you see?</h2>
           <p className="text-sm text-zinc-400 mb-6 max-w-md mx-auto">
-            Sprite Bench is free, ad-free, and always will be. Buying me a coffee is the best way to
+            Sprite Arsenal is free, ad-free, and always will be. Buying me a coffee is the best way to
             say thanks and keep projects like this coming.
           </p>
           <a

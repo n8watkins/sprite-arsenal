@@ -371,11 +371,11 @@ export default function SpriteBench() {
 
       {/* Nav */}
       <header className="sticky top-0 z-20 border-b backdrop-blur-md" style={{ borderColor: "rgba(139,92,246,0.25)", background: "rgba(11,9,20,0.95)" }}>
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-6 py-4">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 font-bold tracking-tight text-zinc-100 hover:opacity-80 transition-opacity shrink-0">
-            <Gamepad2 size={20} className="text-purple-400" />
-            <span className="text-sm font-extrabold tracking-tight">Sprite Bench</span>
+            <Gamepad2 size={22} className="text-purple-400" />
+            <span className="text-lg font-extrabold tracking-tight">Sprite Arsenal</span>
           </a>
 
           {/* Nav links */}
@@ -386,8 +386,10 @@ export default function SpriteBench() {
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-zinc-400 transition-all hover:text-purple-300 hover:bg-purple-500/10"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/n8-icon.png" alt="n8builds" width={14} height={14} className="rounded-sm" />
+              <span className="inline-flex items-center justify-center rounded-full shrink-0" style={{ width: 24, height: 24, background: "rgba(168,85,247,0.15)", border: "1px solid rgba(168,85,247,0.3)" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/n8-icon.png" alt="n8builds" width={14} height={14} className="rounded-full" />
+              </span>
               <span className="hidden sm:inline">n8builds.dev</span>
             </a>
             <a
@@ -422,18 +424,13 @@ export default function SpriteBench() {
       </header>
 
       {/* Hero */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-10 pb-6">
-        <div className="mb-4 flex flex-wrap gap-2">
-          <span className="rounded-full border px-3.5 py-1.5 text-xs font-bold" style={{ borderColor: "rgba(6,182,212,0.4)", color: "#06b6d4", background: "rgba(6,182,212,0.08)" }}>✨ 100% Free</span>
-          <span className="rounded-full border px-3.5 py-1.5 text-xs font-bold" style={{ borderColor: "rgba(168,85,247,0.4)", color: "#a855f7", background: "rgba(168,85,247,0.08)" }}>🖥️ Runs in your browser</span>
-          <span className="rounded-full border px-3.5 py-1.5 text-xs font-bold" style={{ borderColor: "rgba(139,92,246,0.4)", color: "#8b5cf6", background: "rgba(139,92,246,0.08)" }}>🔒 No signup · no server</span>
-        </div>
-        <h1 className="gradient-text text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Sprite Bench
-        </h1>
-        <p className="mt-3 max-w-xl text-base text-zinc-400">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 pt-8 pb-6">
+        <p className="mb-2 text-xs font-semibold tracking-widest uppercase" style={{ color: "#a855f7", letterSpacing: "0.12em" }}>
+          Always free · Runs in your browser · No signup · No server
+        </p>
+        <p className="max-w-xl text-base text-zinc-400">
           Drop a sprite sheet, get a GIF. Auto-detects the grid, previews live, exports at 1×/2×/4×.
-          Free forever — nothing leaves your browser.
+          Nothing leaves your browser — ever.
         </p>
       </div>
 
@@ -685,6 +682,7 @@ export default function SpriteBench() {
                 <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
                   Sheet · grid overlay
                 </h2>
+                <div className="flex justify-center">
                 <div className="overflow-hidden rounded-lg" style={{ display: "inline-block", maxWidth: "100%", position: "relative" }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -696,6 +694,7 @@ export default function SpriteBench() {
                     ref={overlayRef}
                     className="pointer-events-none absolute inset-0 h-full w-full"
                   />
+                </div>
                 </div>
               </section>
             )}
@@ -860,7 +859,7 @@ export default function SpriteBench() {
           style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(6,182,212,0.1) 100%)", border: "1px solid rgba(168,85,247,0.25)" }}
         >
           <div>
-            <p className="font-bold text-zinc-100 text-base">Enjoying Sprite Bench?</p>
+            <p className="font-bold text-zinc-100 text-base">Enjoying Sprite Arsenal?</p>
             <p className="text-sm text-zinc-400 mt-0.5">It&apos;s free and always will be. If it saved you time, a coffee keeps the lights on.</p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
@@ -892,7 +891,7 @@ export default function SpriteBench() {
         <div className="mx-auto max-w-7xl">
           <div className="mb-3 flex items-center justify-center gap-2">
             <Gamepad2 size={18} className="text-purple-400" />
-            <span className="font-bold text-zinc-200 text-sm tracking-tight">Sprite Bench</span>
+            <span className="font-bold text-zinc-200 text-sm tracking-tight">Sprite Arsenal</span>
           </div>
           <p className="text-xs text-zinc-500 mb-4">
             A free tool by{" "}

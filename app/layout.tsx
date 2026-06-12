@@ -6,19 +6,19 @@ const DESCRIPTION =
   "Slice a sprite sheet, preview the animation live, and export an animated GIF or individual frames as a zip. Free, runs entirely in the browser.";
 
 export const metadata: Metadata = {
-  title: "Sprite Bench",
+  title: "Sprite Arsenal",
   description: DESCRIPTION,
   metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: "Sprite Bench",
+    title: "Sprite Arsenal",
     description: DESCRIPTION,
     url: SITE_URL,
-    siteName: "Sprite Bench",
+    siteName: "Sprite Arsenal",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sprite Bench",
+    title: "Sprite Arsenal",
     description: DESCRIPTION,
     creator: "@n8watkins",
   },
