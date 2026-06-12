@@ -1,7 +1,32 @@
 @import "tailwindcss";
 
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: #09090b;
+  background: #0b0914;
   color: #f4f4f5;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.pixel-grid-bg {
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #06b6d4 0%, #a855f7 50%, #06b6d4 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
 }

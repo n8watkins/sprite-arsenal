@@ -341,32 +341,62 @@ export default function SpriteBench() {
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
-      <header className="sticky top-0 z-20 border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-          <span className="text-sm font-semibold tracking-tight">Sprite Bench</span>
-          <a
-            href="https://github.com/n8watkins/sprite-bench"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-zinc-500 transition-colors hover:text-zinc-300"
-          >
-            GitHub
+    <div className="pixel-grid-bg min-h-screen text-zinc-100" style={{ background: "#0b0914" }}>
+      {/* Nav */}
+      <header className="sticky top-0 z-20 border-b backdrop-blur-md" style={{ borderColor: "rgba(139,92,246,0.25)", background: "rgba(11,9,20,0.92)" }}>
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3">
+          <a href="/" className="flex items-center gap-2 font-bold tracking-tight text-zinc-100 hover:opacity-80 transition-opacity">
+            <span className="text-lg">🎮</span>
+            <span className="text-base">Sprite Bench</span>
           </a>
+          <nav className="flex items-center gap-4">
+            <a
+              href="/about"
+              className="text-xs font-medium text-zinc-400 transition-colors hover:text-zinc-200"
+            >
+              About
+            </a>
+            <a
+              href="https://github.com/n8watkins/sprite-bench"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-medium text-zinc-400 transition-colors hover:text-zinc-200"
+            >
+              GitHub ↗
+            </a>
+            <a
+              href="https://ko-fi.com/n8watkins"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all hover:scale-105 hover:opacity-90"
+              style={{ background: "#ff5e5b", color: "#fff" }}
+            >
+              ☕ Buy me a coffee
+            </a>
+          </nav>
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-6xl px-6 py-8">
-        <header className="mb-6">
-          <h1 className="text-2xl font-semibold tracking-tight">Sprite bench</h1>
-          <p className="mt-1 text-sm text-zinc-400">
-            Slice a sprite sheet, preview the animation live, export a GIF or the
-            frames as a zip. Runs entirely in the browser — no server, $0.
-          </p>
-        </header>
+      {/* Hero */}
+      <div className="mx-auto max-w-6xl px-6 pt-10 pb-6">
+        <div className="mb-3 flex flex-wrap gap-2">
+          <span className="rounded-full border px-3 py-1 text-xs font-semibold" style={{ borderColor: "rgba(6,182,212,0.4)", color: "#06b6d4", background: "rgba(6,182,212,0.08)" }}>✨ 100% Free</span>
+          <span className="rounded-full border px-3 py-1 text-xs font-semibold" style={{ borderColor: "rgba(168,85,247,0.4)", color: "#a855f7", background: "rgba(168,85,247,0.08)" }}>🖥️ Runs in your browser</span>
+          <span className="rounded-full border px-3 py-1 text-xs font-semibold" style={{ borderColor: "rgba(139,92,246,0.4)", color: "#8b5cf6", background: "rgba(139,92,246,0.08)" }}>🔒 No signup · no server</span>
+        </div>
+        <h1 className="gradient-text text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Sprite Bench
+        </h1>
+        <p className="mt-3 max-w-xl text-base text-zinc-400">
+          Drop a sprite sheet, get a GIF. Auto-detects the grid, previews live, exports at 1×/2×/4×.
+          Free forever — nothing leaves your browser.
+        </p>
+      </div>
+
+      <main className="mx-auto w-full max-w-6xl px-6 pb-8">
 
         {error && (
-          <div className="mb-4 rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+          <div className="mb-4 rounded-xl border border-red-500/40 px-4 py-3 text-sm text-red-300" style={{ background: "rgba(239,68,68,0.08)" }}>
             {error}
           </div>
         )}
@@ -375,7 +405,7 @@ export default function SpriteBench() {
           {/* Left column: source + grid + export */}
           <div className="flex flex-col gap-6">
             {/* Source */}
-            <section className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+            <section className="rounded-2xl p-5" style={{ border: "1px solid rgba(139,92,246,0.18)", background: "rgba(255,255,255,0.03)" }}>
               <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
                 Sprite sheet
               </h2>
@@ -426,7 +456,7 @@ export default function SpriteBench() {
             </section>
 
             {/* Grid */}
-            <section className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+            <section className="rounded-2xl p-5" style={{ border: "1px solid rgba(139,92,246,0.18)", background: "rgba(255,255,255,0.03)" }}>
               <div className="mb-3 flex items-center justify-between">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">Grid</h2>
                 <button
@@ -481,7 +511,7 @@ export default function SpriteBench() {
             </section>
 
             {/* Export */}
-            <section className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+            <section className="rounded-2xl p-5" style={{ border: "1px solid rgba(139,92,246,0.18)", background: "rgba(255,255,255,0.03)" }}>
               <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">Export</h2>
               <div className="flex flex-col gap-3">
                 <label className="flex items-center justify-between gap-3 text-sm text-zinc-300">
@@ -552,7 +582,7 @@ export default function SpriteBench() {
                   {busy ? "Encoding…" : `Generate GIF (${exportCount} frames)`}
                 </button>
                 {gif && (
-                  <div className="flex flex-col items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950/60 p-4">
+                  <div className="flex flex-col items-center gap-3 rounded-xl p-4" style={{ border: "1px solid rgba(139,92,246,0.2)", background: "rgba(0,0,0,0.4)" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={gif.url} alt="Generated sprite animation"
@@ -607,7 +637,7 @@ export default function SpriteBench() {
           {/* Right column: previews */}
           <div className="flex flex-col gap-6">
             {source && (
-              <section className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+              <section className="rounded-2xl p-5" style={{ border: "1px solid rgba(139,92,246,0.18)", background: "rgba(255,255,255,0.03)" }}>
                 <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
                   Sheet · grid overlay
                 </h2>
@@ -626,7 +656,7 @@ export default function SpriteBench() {
               </section>
             )}
 
-            <section className="sticky top-20 z-10 rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5 backdrop-blur-md">
+            <section className="sticky top-20 z-10 rounded-2xl p-5 backdrop-blur-md" style={{ border: "1px solid rgba(139,92,246,0.25)", background: "rgba(11,9,20,0.85)" }}>
               <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-zinc-400">
                 Live preview
               </h2>
@@ -634,7 +664,7 @@ export default function SpriteBench() {
             </section>
 
             {frames.length > 0 && (
-              <section className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+              <section className="rounded-2xl p-5" style={{ border: "1px solid rgba(139,92,246,0.18)", background: "rgba(255,255,255,0.03)" }}>
                 <div className="mb-3 flex items-center justify-between">
                   <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">Frames</h2>
                   <span className="text-xs text-zinc-500">
@@ -707,7 +737,7 @@ export default function SpriteBench() {
                   const btn =
                     "rounded-lg border border-zinc-700 px-2.5 py-1.5 text-xs font-medium text-zinc-200 transition-colors hover:border-cyan-500/60 hover:text-cyan-300 disabled:opacity-40";
                   return (
-                    <div className="mt-4 rounded-xl border border-zinc-700 bg-zinc-950/60 p-4">
+                    <div className="mt-4 rounded-xl p-4" style={{ border: "1px solid rgba(139,92,246,0.22)", background: "rgba(0,0,0,0.35)" }}>
                       <div className="mb-3 flex items-center justify-between">
                         <h3 className="text-sm font-semibold text-zinc-200">
                           Frame {pos + 1}
@@ -779,21 +809,48 @@ export default function SpriteBench() {
         </div>
       </main>
 
-      <footer className="mt-16 border-t border-zinc-800 py-6 text-center text-xs text-zinc-500">
-        <p>
-          Built by{" "}
-          <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-zinc-300">
-            n8builds.dev
-          </a>{" "}
-          ·{" "}
-          <a href="https://github.com/n8watkins/sprite-bench" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-zinc-300">
-            GitHub
-          </a>{" "}
-          ·{" "}
-          <a href="https://ko-fi.com/n8watkins" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-zinc-300">
-            Buy me a coffee
+      {/* Ko-fi CTA banner */}
+      <div className="mx-auto max-w-6xl px-6 mt-12">
+        <div
+          className="rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
+          style={{ background: "linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(6,182,212,0.1) 100%)", border: "1px solid rgba(168,85,247,0.25)" }}
+        >
+          <div>
+            <p className="font-bold text-zinc-100 text-base">Enjoying Sprite Bench?</p>
+            <p className="text-sm text-zinc-400 mt-0.5">It's free and always will be. If it saved you time, a coffee keeps the lights on. ☕</p>
+          </div>
+          <a
+            href="https://ko-fi.com/n8watkins"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 rounded-xl px-6 py-3 font-bold text-sm transition-all hover:scale-105 hover:opacity-90"
+            style={{ background: "#ff5e5b", color: "#fff" }}
+          >
+            ☕ Buy me a coffee on Ko-fi
           </a>
-        </p>
+        </div>
+      </div>
+
+      <footer className="mt-10 pb-10 px-6 text-center">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <span className="text-xl">🎮</span>
+            <span className="font-bold text-zinc-200 text-base tracking-tight">Sprite Bench</span>
+          </div>
+          <p className="text-xs text-zinc-500 mb-4">
+            A free tool by{" "}
+            <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="font-semibold text-purple-400 hover:text-purple-300 transition-colors">
+              n8builds.dev
+            </a>
+            {" "}— building useful things in public.
+          </p>
+          <div className="flex items-center justify-center gap-5 text-xs text-zinc-500">
+            <a href="/about" className="hover:text-zinc-300 transition-colors">About</a>
+            <a href="https://github.com/n8watkins/sprite-bench" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">GitHub</a>
+            <a href="https://n8builds.dev" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">n8builds.dev</a>
+            <a href="https://ko-fi.com/n8watkins" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">Ko-fi</a>
+          </div>
+        </div>
       </footer>
     </div>
   );
