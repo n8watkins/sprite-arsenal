@@ -2,156 +2,209 @@
 
 **Live:** https://sprite-bench.vercel.app  
 **Repo:** https://github.com/n8watkins/sprite-bench  
-**Deployed:** Vercel (auto-deploys on push to `main`)
+**Auto-deploys:** every push to `main` triggers a Vercel production build.
 
 ---
 
-## What we built
+## Project summary
 
-A standalone, fully browser-side sprite sheet → animated GIF tool. Zero server, zero model calls, zero cost to run.
+Standalone, 100% browser-side sprite sheet → animated GIF tool. No server,
+no model calls, no API keys. Extracted from `asset-arsenal/backend` (private
+repo `n8watkins/asset-arsenal`) where it lived at `/app/sprite/page.tsx`.
 
-### Tech stack
-- Next.js 16 (app router, static export)
-- Tailwind CSS v4
-- TypeScript
-- No other dependencies
+**Stack:** Next.js 16, React 19, Tailwind CSS v4, TypeScript — zero runtime
+deps beyond those four.
 
-### File map
-
-```
-app/
-  page.tsx              — the entire UI (single page app)
-  layout.tsx            — metadata, globals
-  globals.css           — Tailwind import + base styles
-lib/
-  sprite/
-    slice.ts            — grid math, blank detection, auto-detect, stabilize
-    gif.ts              — dependency-free GIF89a encoder
-    demo.ts             — programmatic slime demo (no image assets shipped)
-  zip.ts                — dependency-free ZIP writer
-components/
-  sprite/
-    AnimationPreview.tsx — canvas-based live frame player
-```
-
-### What it does
-- Drop / click / paste / drag a sprite sheet
+**What it does:**
+- Drop / click / paste / drag a sprite sheet image
 - Auto-detects grid from background color gaps
-- Slices into frames, live previews animation
-- Per-frame: toggle in/out, nudge crop (1px or 8px shift-click), hold duration multiplier, reorder
-- Stabilize: aligns all frames to feet or center anchor (fixes jittery sprites)
-- Export: animated GIF at 1×/2×/4×, transparent or solid background, ping-pong mode
+- Slices frames, shows live animation preview via canvas
+- Per-frame: toggle in/out, nudge crop (1px or 8px), hold-duration multiplier, reorder
+- Stabilize: aligns all frames to a common anchor (feet or center)
+- Export: animated GIF at 1×/2×/4× scale, transparent or solid bg, ping-pong
 - Export: individual frames as a .zip
-- Demo slime loads on first visit so the page isn't a blank form
-
-### What it does NOT do (yet)
-- APNG / WebP export (GIF only)
-- Multiple named animation clips per sheet
-- Clipboard copy (copy GIF directly, no download)
-- Mobile-optimized layout (functional but not polished on small screens)
-- Google Analytics
-- About / "made by" section beyond a footer GitHub link
-- OG image / social card
+- Demo slime sheet loads on first visit (programmatically generated — no image assets)
 
 ---
 
-## Origin
+## Session work (2026-06-12)
 
-Extracted from `asset-arsenal/backend` (private repo, `n8watkins/asset-arsenal`).
-The sprite bench was one sub-tool inside a larger AI asset generation app.
-All core logic was written from scratch (no third-party GIF/ZIP libraries).
-The original was inspired by collidingScopes' MIT `spritesheet-to-gif`; this is a full reimplementation.
-
----
-
-## Domain decision
-
-**Keep it standalone. Add attribution, not integration.**
-
-| Option | Verdict |
+| Commit | What |
 |---|---|
-| `sprite-bench.vercel.app` (current) | Fine for now, not memorable |
-| `n8builds.dev/sprite-bench` | Routing/ownership complexity, slows the tool with n8builds infra |
-| Subdomain `sprite.n8builds.dev` | Clean, no code bloat, routes back to brand |
-| Own domain `spritebench.dev` or `spritebench.io` | Best for SEO/sharing; ~$12/yr |
+| `cef3f25` | Initial commit — full extraction from asset-arsenal, clean standalone build |
+| `462a154` | README with Ko-fi link |
+| `3eed745` | Updated README with real Vercel URL |
+| `2ffb60f` | Footer (n8builds.dev · GitHub · Ko-fi), HANDOFF.md |
 
-**Recommended path:**
-1. Short term: add a small "by [n8builds.dev](https://n8builds.dev)" credit in the footer — free, builds brand, no bloat
-2. Medium term: add sprite-bench as a card on n8builds.dev projects
-3. Long term: if it gets traction, grab `spritebench.dev` and point it here
+**Verified working:**
+- `npm run build` passes clean (TypeScript + static export)
+- Deployed to https://sprite-bench.vercel.app and confirmed live
+- GitHub repo is public: https://github.com/n8watkins/sprite-bench
+
+**Not done / in flight:**
+- Google Analytics (GA4) — needs a measurement ID from the user; implementation is ready (see Next steps)
+- OG social card image — placeholder URL is in place, no actual image yet
+- All feature work below is unstarted
 
 ---
 
-## Analytics
+## Next steps (ordered)
 
-GA4 is the right call. The implementation is 5 lines — a `<Script>` tag in `layout.tsx` + a `NEXT_PUBLIC_GA_ID` env var in Vercel. Zero bundle size impact. Zero server logic.
+### 1. Google Analytics
+The user wants GA on this project. They have GA on other projects (n8builds-web).
 
 **Steps:**
-1. Create a new GA4 property at analytics.google.com → call it "Sprite Bench"
-2. Copy the `G-XXXXXXXXXX` measurement ID
-3. Add to Vercel env vars: `NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX`
-4. Add to `app/layout.tsx`:
+1. User must create a new GA4 property at analytics.google.com → call it "Sprite Bench" → copy the `G-XXXXXXXXXX` measurement ID
+2. Add to Vercel env vars: `NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX`
+3. In `app/layout.tsx`, add after the existing imports:
 
 ```tsx
 import Script from "next/script";
-// in <head>:
-<Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} strategy="afterInteractive" />
-<Script id="ga-init" strategy="afterInteractive">{`
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-`}</Script>
 ```
 
----
+And inside `<head>` (add `<head>` tag to the layout if not present):
 
-## Immediate polish (next session)
+```tsx
+{process.env.NEXT_PUBLIC_GA_ID && (
+  <>
+    <Script
+      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+      strategy="afterInteractive"
+    />
+    <Script id="ga-init" strategy="afterInteractive">{`
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+    `}</Script>
+  </>
+)}
+```
 
-These are all small, high-impact, low-risk:
-
-- [ ] **OG / social card** — add `og:image` and Twitter card meta so sharing looks good on Discord/Twitter. A static 1200×630 PNG is enough.
-- [ ] **Favicon** — currently using Next default. A pixel-art icon (even a simple sprite frame) would be on-brand.
-- [ ] **Footer** — add "by [n8builds.dev](https://n8builds.dev) · [Ko-fi](https://ko-fi.com/n8watkins)" at the bottom of the page
-- [ ] **GA4** — see above, 5-minute task once you have the measurement ID
-- [ ] **Add to n8builds.dev projects** — card pointing to the live URL
-
----
-
-## Features that would make it genuinely more useful
-
-### Tier 1 — High value, reasonable effort
-
-**Animated WebP / APNG export**  
-GIF has a 256-color palette cap. For pixel art it's usually fine, but for anything richer the output degrades. WebP and APNG both support true color + full alpha. This would make the tool useful for a wider range of assets and is a real differentiator vs every other "sprite to gif" site.
-
-**Copy GIF to clipboard**  
-Right now: Generate → Download → open file explorer → copy. One `navigator.clipboard.write()` call eliminates three steps. Game devs pasting into Discord would love this.
-
-**Multiple named clips**  
-Most character sprite sheets have multiple animations stacked: rows 1–2 = walk, rows 3–4 = run, row 5 = jump, etc. Right now you'd have to re-set the grid for each one. A "clips" system where you define named frame ranges and export each as its own GIF would take this from a one-shot tool to a real pipeline step.
-
-**URL import**  
-Paste an image URL and load it directly. Especially useful for people browsing itch.io asset packs who don't want to download first.
-
-### Tier 2 — Bigger, worth doing if there's traction
-
-**Reverse: pack frames → spritesheet**  
-Upload individual frames, get a packed sheet back. Completes the loop. Aseprite users sometimes want to work the other direction.
-
-**Shareable link**  
-Encode the grid settings (not the image, just rows/cols/offsets/fps/scale) in the URL so you can share a link with your settings pre-loaded. Useful for "here's the correct grid for this specific sheet."
-
-**GIF optimizer pass**  
-Crop each frame to the minimum bounding box of the content delta (don't redraw pixels that didn't change). Standard GIF optimization trick — can cut file size by 30–60% on sprites with large empty areas.
-
-**Drag-to-reorder frames**  
-The ◀/▶ buttons work but dragging frame thumbnails directly is more natural. `@dnd-kit/sortable` would do it in ~50 lines.
+Acceptance: visiting the live site triggers a `page_view` event in the GA4 realtime dashboard.
 
 ---
 
-## What success looks like
+### 2. OG / social card
+Sharing the URL on Discord/Twitter/Reddit shows a blank card right now.
 
-This tool has a natural SEO target: "sprite sheet to gif," "spritesheet animator," "pixel art gif maker." Those are real searches from game devs and pixel artists. With GA in place and the OG card working so it previews nicely when shared on Discord/Reddit/Twitter, this can pull organic traffic with no paid promotion.
+- Create a static `public/og.png` — 1200×630px, dark background, tool name, a GIF of the demo slime
+- In `app/layout.tsx` metadata, add:
 
-The Ko-fi link is already in the README. Add it to the page footer too and it'll convert.
+```tsx
+openGraph: {
+  title: "Sprite Bench",
+  description: "Slice a sprite sheet, preview live, export GIF or frames. Free, runs in-browser.",
+  url: "https://sprite-bench.vercel.app",
+  images: [{ url: "/og.png", width: 1200, height: 630 }],
+},
+twitter: {
+  card: "summary_large_image",
+  title: "Sprite Bench",
+  description: "...",
+  images: ["/og.png"],
+},
+```
+
+Acceptance: pasting the URL into Twitter card validator shows the image.
+
+---
+
+### 3. Copy GIF to clipboard
+One of the highest-friction moments: user generates a GIF, wants to paste it into Discord — currently requires Download → open folder → copy file.
+
+In `app/page.tsx`, in the `gif &&` block alongside the Download button:
+
+```tsx
+<button
+  type="button"
+  onClick={async () => {
+    const res = await fetch(gif.url);
+    const blob = await res.blob();
+    await navigator.clipboard.write([new ClipboardItem({ "image/gif": blob })]);
+  }}
+  className="..."
+>
+  Copy GIF
+</button>
+```
+
+Note: `ClipboardItem` with `image/gif` has mixed browser support. Wrap in try/catch and show a toast if it fails. Chrome supports it; Firefox/Safari may not.
+
+---
+
+### 4. Add to n8builds.dev projects
+
+The user's main site is `/home/natkins/n8builds/n8builds-web` (deployed at https://n8builds.dev). Sprite Bench should appear there as a project card.
+
+- File to edit: `n8builds-web/components/Projects/index.tsx` (or wherever the project list lives — read it first)
+- Card: title "Sprite Bench", description from README, link to https://sprite-bench.vercel.app, tag "tool" or "free"
+
+---
+
+### 5. Animated WebP / APNG export (bigger feature)
+
+GIF's 256-color cap is fine for pixel art but degrades richer sprites. WebP and APNG both support true color + full alpha.
+
+- `lib/sprite/gif.ts` is the model to follow — a dependency-free encoder written by hand
+- For APNG: the format is documented at https://wiki.mozilla.org/APNG_Specification — follows PNG with extra chunks
+- For WebP: more complex; a library like `@ffmpeg/ffmpeg` (WASM) would be easier than hand-rolling
+- Add export format selector (GIF / APNG / WebP) to the Export section in `app/page.tsx`
+
+---
+
+### 6. Multiple named animation clips
+
+Most character sheets stack several animations: rows 1–2 = walk, rows 3–4 = run, row 5 = jump. Right now the user re-sets the grid for each one.
+
+- Add a "Clips" concept: named frame-range slices of the loaded sheet
+- Each clip gets its own frame strip, preview, and export button
+- This is a larger UI change — design the data model first before touching the page
+
+---
+
+## Domain
+
+**Decision (made by user this session):** Keep as standalone Vercel deployment.
+Do NOT route through n8builds.dev as a sub-path — too much infra coupling.
+
+Options considered and their status:
+- `sprite-bench.vercel.app` — current, fine for now
+- `sprite.n8builds.dev` — clean subdomain option if user wants custom domain later
+- `spritebench.dev` — best for SEO, ~$12/yr, grab if it gets traction
+
+---
+
+## Conventions & gotchas
+
+- **Deploy:** push to `main` → auto-deploys to Vercel. No manual deploy step needed.
+- **Build command:** `npm run build` (runs `next build`). Must pass before committing.
+- **No server code.** This is a fully static/client-side app. Do not add API routes or server components that touch secrets — there are none.
+- **Tailwind v4 syntax** — uses `@import "tailwindcss"` in globals.css, NOT the v3 `@tailwind base/components/utilities` directives.
+- **Next.js 16** — this is a cutting-edge version; check `node_modules/next/dist/docs/` if behavior seems wrong before assuming a bug.
+- **Commit trailers:** all commits in this repo use `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
+- **No `lib/icon/` imports** — the sprite bench was deliberately extracted to have zero dependency on asset-arsenal's `lib/icon/` or `lib/storage/` utilities. Keep it that way.
+- **`slugify` lives in `lib/zip.ts`** — was inlined from asset-arsenal's `lib/icon/download.ts` to break the dependency. Don't re-import it from anywhere else.
+
+---
+
+## File map
+
+| File | Role |
+|---|---|
+| `app/page.tsx` | Entire UI — source intake, grid controls, frame editor, export |
+| `app/layout.tsx` | Metadata, GA goes here |
+| `app/globals.css` | Tailwind import, base body styles |
+| `lib/sprite/slice.ts` | Grid math, auto-detect, blank detection, stabilize |
+| `lib/sprite/gif.ts` | Dependency-free GIF89a encoder |
+| `lib/sprite/demo.ts` | Programmatic slime demo sheet |
+| `lib/zip.ts` | Dependency-free ZIP writer (includes `slugify`) |
+| `components/sprite/AnimationPreview.tsx` | Canvas-based live frame player |
+| `HANDOFF.md` | This file |
+
+---
+
+## Related repos
+
+- **asset-arsenal/backend** (`n8watkins/asset-arsenal`, private) — where the sprite bench originated. The `/app/sprite/page.tsx` there is the source of truth for the original implementation. If a significant feature is added to sprite-bench, the user may want to mirror it back.
+- **n8builds-web** (`/home/natkins/n8builds/n8builds-web`, `n8builds.dev`) — user's main portfolio/lab site. Sprite Bench should be added as a project card there.
